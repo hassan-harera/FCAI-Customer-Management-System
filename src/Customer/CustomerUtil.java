@@ -29,15 +29,25 @@ public class CustomerUtil {
         list.printArrayList();
     }
 
-    public void sort() {
+    public void sortId() {
+        list.heapSortId();
+    }
+
+    public void sortPhone() {
+        list.heapSortPhone();
+    }
+
+    public void sortName() {
         list.heapSortName();
     }
 
     public ArrayList<Customer> serchId(int id) {
+        list.heapSortId();
         return list.searchId(id);
     }
 
     public ArrayList<Customer> serchPhone(int phone) {
+        list.heapSortPhone();
         return list.searchPhone(phone);
     }
 }

@@ -55,7 +55,7 @@ public class Customer implements Comparable<Customer> {
         ret.add(id);
         ret.add(name);
         ret.add(nationality);
-        ret.add(phone);
+        ret.add("0"+phone);
         ret.add(currenBillAmount);
         ret.add(accumulatedBill);
         

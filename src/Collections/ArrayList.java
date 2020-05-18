@@ -65,8 +65,7 @@ public class ArrayList<Type extends Customer> {
         if (isEmpty()) {
             return false;
         }
-
-        Boolean flag = false;
+        
         for (int i = 0; i < arrayList.length; i++) {
             if (get(i).id == t.id) {
                 delete(i);
@@ -98,49 +97,94 @@ public class ArrayList<Type extends Customer> {
         return arrayList.length;
     }
 
-//    public void heapSortId() {
-//        int n = arrayList.length;
-//        for (int i = (n / 2) - 1; i >= 0; i--) {
-//            sort(arrayList, n, i);
-//        }
-//        for (int i = n - 1; i > 0; i--) {
-//            Type temp = arrayList[0];
-//            arrayList[0] = arrayList[i];
-//            arrayList[i] = temp;
-//
-//            sort(arrayList, i, 0);
-//        }
-//    }
-//
-//    private Customer[] sort(Customer[] arrayList, int n, int i) {
-//        int large = i;
-//        int left = large * 2 + 1;
-//        int right = large * 2 + 2;
-//
-//        if (left < n) {
-//            if (arrayList[left] == null) {
-//                large = left;
-//            } else if (arrayList[large] != null && arrayList[left].id > arrayList[large].id) {
-//                large = left;
-//            }
-//        }
-//
-//        if (right < n) {
-//            if (arrayList[right] == null) {
-//                large = right;
-//            } else if (arrayList[large] != null && arrayList[right].id > arrayList[large].id) {
-//                large = right;
-//            }
-//        }
-//
-//        if (large != i) {
-//            Customer temp = arrayList[i];
-//            arrayList[i] = arrayList[large];
-//            arrayList[large] = temp;
-//            sort(arrayList, n, large);
-//        }
-//        return arrayList;
-//    }
+    public void heapSortId() {
+        int n = arrayList.length;
+        for (int i = (n / 2) - 1; i >= 0; i--) {
+            sort(arrayList, n, i);
+        }
+        for (int i = n - 1; i > 0; i--) {
+            Type temp = arrayList[0];
+            arrayList[0] = arrayList[i];
+            arrayList[i] = temp;
+
+            sort(arrayList, i, 0);
+        }
+    }
+
+    private Customer[] sort(Customer[] arrayList, int n, int i) {
+        int large = i;
+        int left = large * 2 + 1;
+        int right = large * 2 + 2;
+
+        if (left < n) {
+            if (arrayList[left] == null) {
+                large = left;
+            } else if (arrayList[large] != null && arrayList[left].id > arrayList[large].id) {
+                large = left;
+            }
+        }
+
+        if (right < n) {
+            if (arrayList[right] == null) {
+                large = right;
+            } else if (arrayList[large] != null && arrayList[right].id > arrayList[large].id) {
+                large = right;
+            }
+        }
+
+        if (large != i) {
+            Customer temp = arrayList[i];
+            arrayList[i] = arrayList[large];
+            arrayList[large] = temp;
+            sort(arrayList, n, large);
+        }
+        return arrayList;
+    }
+
+    public void heapSortPhone() {
+        int n = arrayList.length;
+        for (int i = (n / 2) - 1; i >= 0; i--) {
+            sortPhone(arrayList, n, i);
+        }
+        for (int i = n - 1; i > 0; i--) {
+            Type temp = arrayList[0];
+            arrayList[0] = arrayList[i];
+            arrayList[i] = temp;
+
+            sortPhone(arrayList, i, 0);
+        }
+    }
+
+    private Customer[] sortPhone(Customer[] arrayList, int n, int i) {
+        int large = i;
+        int left = large * 2 + 1;
+        int right = large * 2 + 2;
+
+        if (left < n) {
+            if (arrayList[left] == null) {
+                large = left;
+            } else if (arrayList[large] != null && arrayList[left].phone > arrayList[large].phone) {
+                large = left;
+            }
+        }
+
+        if (right < n) {
+            if (arrayList[right] == null) {
+                large = right;
+            } else if (arrayList[large] != null && arrayList[right].phone > arrayList[large].phone) {
+                large = right;
+            }
+        }
+
+        if (large != i) {
+            Customer temp = arrayList[i];
+            arrayList[i] = arrayList[large];
+            arrayList[large] = temp;
+            sort(arrayList, n, large);
+        }
+        return arrayList;
+    }
+
     public void heapSortName() {
         int n = arrayList.length;
         for (int i = (n / 2) - 1; i >= 0; i--) {
@@ -202,7 +246,7 @@ public class ArrayList<Type extends Customer> {
         return binarySearchId(val, 0, arrayList.length - 1, new ArrayList(Customer.class));
     }
 
-    public ArrayList<Type> binarySearchId(int val, int start, int end, ArrayList<Type> list) {
+    private ArrayList<Type> binarySearchId(int val, int start, int end, ArrayList<Type> list) {
         if (start == end && (arrayList[start] == null || arrayList[start].id != val)) {
             return null;
         }
@@ -223,11 +267,11 @@ public class ArrayList<Type extends Customer> {
 
     public ArrayList<Type> searchPhone(int val) {
 
-        return binarySearchPhone(val, 0, arrayList.length - 1, new ArrayList(Customer.class));
+        return binarySearchPhone(val, 0, arrayList.length, new ArrayList(Customer.class));
 
     }
 
-    public ArrayList<Type> binarySearchPhone(int val, int start, int end, ArrayList<Type> list) {
+    private ArrayList<Type> binarySearchPhone(int val, int start, int end, ArrayList<Type> list) {
         if (start == end && arrayList[start].phone != val) {
             return null;
         }
@@ -235,9 +279,9 @@ public class ArrayList<Type extends Customer> {
         int mid = (start + end) / 2;
 
         if (arrayList[mid] != null && val > arrayList[mid].phone) {
-            return binarySearchId(val, mid + 1, end, list);
+            return binarySearchPhone(val, mid + 1, end, list);
         } else if (arrayList[mid] != null && val < arrayList[mid].phone) {
-            return binarySearchId(val, start, mid, list);
+            return binarySearchPhone(val, start, mid, list);
         } else if (arrayList[mid] != null && val == arrayList[mid].phone) {
             list.add(arrayList[mid]);
             return list;
